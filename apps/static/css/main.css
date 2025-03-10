@@ -1,0 +1,84 @@
+/* General Styling for Links */
+.custom-link {
+    display: block;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* Specific Styles for Different Links */
+.link1 {
+    background-color: lightgreen;
+    color: red;
+}
+
+.link2 {
+    background-color: gray;
+    color: yellow;
+}
+
+.link3 {
+    background-color: black;
+    color: white;
+}
+
+/* Link States */
+.custom-link:hover {
+    text-decoration: underline;
+    opacity: 0.8;
+}
+
+.custom-link:active {
+    transform: scale(0.95);
+}
+
+/* Visited Links */
+.custom-link:visited {
+    color: purple;
+}
+/* Text Formatting Styles */
+.text-header {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    color: navy;
+}
+
+.bold-text {
+    font-weight: bold;
+}
+
+.italic-text {
+    font-style: italic;
+}
+
+.underline-text {
+    text-decoration: underline;
+}
+
+.large-text {
+    font-size: 22px;
+}
+
+.small-text {
+    font-size: 12px;
+}
+
+.colored-text {
+    color: red;
+}
+
+.highlight-text {
+    background-color: yellow;
+    padding: 5px;
+}
+
+.centered-text {
+    text-align: center;
+    line-height: 2;
+    font-size: 18px;
+}
+

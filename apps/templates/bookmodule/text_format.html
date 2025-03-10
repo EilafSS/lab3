@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Formatting</title>
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .heading {
+            font-size: 24px;
+            font-weight: bold;
+            background-color: #f8f8d9;
+            padding: 10px;
+            border-left: 5px solid green;
+        }
+        .example {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+        mark {
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+
+    <h2 class="heading">Example of Formatting Tags</h2>
+
+    <p class="example">This text has <b>subtext</b> using <code>&lt;b&gt;</code> tag.</p>
+    <p class="example">This text has <strong>subtext</strong> using <code>&lt;strong&gt;</code> tag.</p>
+    <p class="example">This text has <i>subtext</i> using <code>&lt;i&gt;</code> tag.</p>
+    <p class="example">This text has <em>subtext</em> using <code>&lt;em&gt;</code> tag.</p>
+    <p class="example">This text has <small>subtext</small> using <code>&lt;small&gt;</code> tag.</p>
+    <p class="example">This text has <mark>subtext</mark> using <code>&lt;mark&gt;</code> tag.</p>
+    <p class="example">This text has <del>subtext</del> using <code>&lt;del&gt;</code> tag.</p>
+    <p class="example">This text has <ins>subtext</ins> using <code>&lt;ins&gt;</code> tag.</p>
+    <p class="example">This text has X<sub>subtext</sub> using <code>&lt;sub&gt;</code> tag.</p>
+    <p class="example">This text has X<sup>subtext</sup> using <code>&lt;sup&gt;</code> tag.</p>
+
+</body>
+</html>
