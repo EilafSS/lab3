@@ -1,18 +1,24 @@
 from django.urls import path
 from . import views
+from .views import add_book, simple_query, complex_query
+
+app_name = 'books'
 
 urlpatterns = [
-    path('', views.index, name='books.index'),
-    path('list_books/', views.list_books, name="books.list_books"),
-    path('<int:bookId>/', views.viewbook, name="books.view_one_book"),
-    path('aboutus/', views.aboutus, name="books.aboutus"),
+    path('', views.index, name='index'),  # ✅ هذا هو الرابط الرئيسي
+    path('add/', add_book, name='add'),
+    path('simple/query/', simple_query, name='simple_query'),
+    path('complex/query/', complex_query, name='complex_query'),
+    path('list_books/', views.list_books, name='list_books'),
+    path('<int:bookId>/', views.viewbook, name='view_one_book'),
+    path('aboutus/', views.aboutus, name='aboutus'),
 
-    # ✅ Ensure function names match `views.py`
-    path('html5/links/', views.html_links, name="books.html_links"),  
-    path('html5/textformat/', views.text_format, name="books.text_format"),
-    path('html5/listing/', views.listing, name="books.listing"),
-    path('html5/tables/', views.html5_tables, name='books.tables'),  # ✅ Fixed reference
+    # HTML5 related views
+    path('html5/links/', views.html_links, name='html_links'),
+    path('html5/textformat/', views.text_format, name='text_format'),
+    path('html5/listing/', views.listing, name='listing'),
+    path('html5/tables/', views.html5_tables, name='tables'),
 
-    # Search Page
-    path('search/', views.search_books, name="books.search"),
+    # Search
+    path('search/', views.search_books, name='search'),
 ]

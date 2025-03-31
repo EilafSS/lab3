@@ -2,14 +2,33 @@
 
 {% load static %}
 
-{% block title %} My First Index HTML Page {% endblock title %}
+{% block title %} Library - Home {% endblock title %}
 
 {% block content %}
-  <h1 style="color: blue;">This is heading 1 (Library)</h1>
-  <p style="color: white;background-color: black;">This is a paragraph text</p>
-  <a href="https://www.w3schools.com/html/default.asp">Click Here to learn more about HTML & CSS</a>
-  <hr>
-  <!-- This is a comment in HTML, not rendered in the browser -->
-  <h2>This is heading 2</h2>
-  <p>This is some other text</p>
-  {% endblock content %}
+<center>
+    <h1 style="color: blue;">Welcome to the Library 📚</h1>
+    <p style="color: white; background-color: black;">
+        This is a paragraph text describing the library system.
+    </p>
+    <a href="https://www.w3schools.com/html/default.asp">Click Here to learn more about HTML & CSS</a>
+    <hr>
+
+    <h2>Books Not Found?</h2>
+    <p>Sorry, no books matched your search criteria.</p>
+    
+    <!-- Navigation Buttons -->
+    <a href="/books/search/" style="color: white; background-color: green; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🔍 Try Another Search
+    </a>
+    <br><br>
+    <a href="{% url 'books:add' %}">
+        <button style="padding: 10px; background-color: green; color: white; border: none; border-radius: 5px;">
+          ➕ Add Book
+        </button>
+      </a>
+    <br><br>
+    <a href="/" style="color: white; background-color: blue; padding: 10px; text-decoration: none; border-radius: 5px;">
+        🏠 Return to Home
+    </a>
+</center>
+{% endblock content %}

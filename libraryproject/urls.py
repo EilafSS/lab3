@@ -22,4 +22,5 @@ import apps.bookmodule.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('books/', include("apps.bookmodule.urls")),  # Ensure bookmodule is included
+     path('', include(('apps.bookmodule.urls', 'books'), namespace='books')),  
 ]
