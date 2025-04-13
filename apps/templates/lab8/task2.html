@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Task 2 - Filtered Books</title>
+</head>
+<body>
+    <h2>Books with Edition ≤ 3 and 'co' in Title or Author</h2>
+    <ul>
+        {% for book in books %}
+            <li>{{ book.title }} by {{ book.author }} - Edition: {{ book.edition }}</li>
+        {% empty %}
+            <li>No matching books found.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
