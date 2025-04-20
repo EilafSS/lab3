@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from .models import Book  # Import the Book model
 from django.db.models import Q, Count, Sum, Avg, Max, Min
 from django.db.models.functions import Lower
-from .models import Book, Student, Address  # Make sure Student and Address exist
+from .models import Book, Student, Address,Course, Department, Card  # Make sure Student and Address exist
+from django.db.models import OuterRef, Subquery
+
 
 def index(request):
     return render(request, "bookmodule/index.html")
@@ -137,3 +139,33 @@ def task5(request):
 def city_count(request):
     city_data = Address.objects.annotate(student_count=Count('student'))
     return render(request, 'lab8/task7.html', {'city_data': city_data})
+
+def student_list(request):
+    students = Student.objects.select_related('card').all()
+    return render(request, 'bookmodule/student_list.html', {'students': students})
+
+
+def students_with_cards(request):
+    students = Student.objects.select_related('card').all()
+    return render(request, 'bookmodule/students_with_cards.html', {'students': students})
+    print("students_with_cards loaded")
+    
+def lab9_task1(request):
+    departments = Department.objects.annotate(student_count=Count('student'))
+    return render(request, 'bookmodule/lab9_task1.html', {'departments': departments})
+
+def lab9_task2(request):
+    courses = Course.objects.annotate(num_students=Count('students'))
+    return render(request, 'bookmodule/lab9_task2.html', {'courses': courses})
+
+def lab9_task3(request):
+    oldest_student_subquery = Student.objects.filter(department=OuterRef('pk')).order_by('id').values('name')[:1]
+    departments = Department.objects.annotate(oldest_student_name=Subquery(oldest_student_subquery))
+
+    return render(request, 'bookmodule/lab9_task3.html', {'departments': departments})
+
+
+def lab9_task4(request):
+    departments = Department.objects.annotate(num_students=Count('student')).filter(num_students__gt=2).order_by('-num_students')
+
+    return render(request, 'bookmodule/lab9_task4.html', {'departments':departments})
