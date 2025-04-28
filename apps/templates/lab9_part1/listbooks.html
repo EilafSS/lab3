@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List of Books - Lab9 Part1</title>
+</head>
+<body>
+    <h1>Books</h1>
+
+    <!-- زر لإضافة كتاب جديد -->
+    <a href="{% url 'books:add_book_lab9_part1' %}">Add New Book</a>
+
+    <table border="1" cellpadding="10">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Edition</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for book in books %}
+            <tr>
+                <td>{{ book.title }}</td>
+                <td>{{ book.author }}</td>
+                <td>{{ book.edition }}</td>
+                <td>{{ book.price }}</td>
+                <td>
+                    <a href="{% url 'books:edit_book_lab9_part1' book.id %}">Edit</a> |
+                    <a href="{% url 'books:delete_book_lab9_part1' book.id %}">Delete</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5">No books available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

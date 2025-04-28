@@ -5,7 +5,8 @@ from django.db.models import Q, Count, Sum, Avg, Max, Min
 from django.db.models.functions import Lower
 from .models import Book, Student, Address,Course, Department, Card  # Make sure Student and Address exist
 from django.db.models import OuterRef, Subquery
-
+from django.shortcuts import redirect
+from .forms import BookForm 
 
 def index(request):
     return render(request, "bookmodule/index.html")
@@ -169,3 +170,83 @@ def lab9_task4(request):
     departments = Department.objects.annotate(num_students=Count('student')).filter(num_students__gt=2).order_by('-num_students')
 
     return render(request, 'bookmodule/lab9_task4.html', {'departments':departments})
+
+#lab10
+
+def list_books_lab9_part1(request):
+    books = Book.objects.all()
+    return render(request, 'lab9_part1/listbooks.html', {'books': books})
+
+
+def add_book_lab9_part1(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        author = request.POST.get('author')
+        edition = request.POST.get('edition')
+        price = request.POST.get('price')
+
+        Book.objects.create(
+            title=title,
+            author=author,
+            edition=edition,
+            price=price
+        )
+        return redirect('books:list_books_lab9_part1')
+    
+    return render(request, 'lab9_part1/addbook.html')
+
+
+def edit_book_lab9_part1(request, book_id):
+    book = Book.objects.get(id=book_id)
+    
+    if request.method == "POST":
+        book.title = request.POST.get('title')
+        book.author = request.POST.get('author')
+        book.edition = request.POST.get('edition')
+        book.price = request.POST.get('price')
+        book.save()
+        return redirect('books:list_books_lab9_part1')
+
+    return render(request, 'lab9_part1/editbook.html', {'book': book})
+
+def delete_book_lab9_part1(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.delete()
+    return redirect('books:list_books_lab9_part1')
+
+
+#lab10 part2
+def list_books_lab9_part2(request):
+    books = Book.objects.all()
+    return render(request, 'lab9_part2/listbooks.html', {'books': books})
+
+
+
+def add_book_lab9_part2(request):
+    if request.method == "POST":
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books:list_books_lab9_part2')
+    else:
+        form = BookForm()
+
+    return render(request, 'lab9_part2/addbook.html', {'form': form})
+
+def edit_book_lab9_part2(request, book_id):
+    book = Book.objects.get(id=book_id)
+
+    if request.method == "POST":
+        form = BookForm(request.POST, instance=book)
+        if form.is_valid():
+            form.save()
+            return redirect('books:list_books_lab9_part2')
+    else:
+        form = BookForm(instance=book)
+
+    return render(request, 'lab9_part2/editbook.html', {'form': form, 'book': book})
+
+def delete_book_lab9_part2(request, book_id):
+    book = Book.objects.get(id=book_id)
+    book.delete()
+    return redirect('books:list_books_lab9_part2')
