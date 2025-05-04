@@ -7,6 +7,8 @@ from .models import Book, Student, Address,Course, Department, Card  # Make sure
 from django.db.models import OuterRef, Subquery
 from django.shortcuts import redirect
 from .forms import BookForm 
+from .forms import StudentForm, AddressForm
+
 
 def index(request):
     return render(request, "bookmodule/index.html")
@@ -216,11 +218,10 @@ def delete_book_lab9_part1(request, book_id):
 
 
 #lab10 part2
+
 def list_books_lab9_part2(request):
     books = Book.objects.all()
     return render(request, 'lab9_part2/listbooks.html', {'books': books})
-
-
 
 def add_book_lab9_part2(request):
     if request.method == "POST":
@@ -250,3 +251,85 @@ def delete_book_lab9_part2(request, book_id):
     book = Book.objects.get(id=book_id)
     book.delete()
     return redirect('books:list_books_lab9_part2')
+
+#lab11
+def list_students_lab11_part1(request):
+    students = Student.objects.all()
+    return render(request, 'lab11_part1/liststudents.html', {'students': students})
+
+# إضافة طالب وعنوان
+def add_student_lab11_part1(request):
+    if request.method == 'POST':
+        student_form = StudentForm(request.POST)
+        address_form = AddressForm(request.POST)
+        if student_form.is_valid() and address_form.is_valid():
+            address = address_form.save()
+            student = student_form.save(commit=False)
+            student.address = address
+            student.save()
+            return redirect('books:list_students_lab11_part1')
+    else:
+        student_form = StudentForm()
+        address_form = AddressForm()
+
+    return render(request, 'lab11_part1/addstudent.html', {'student_form': student_form, 'address_form': address_form})
+
+# تعديل طالب وعنوانه
+def edit_student_lab11_part1(request, student_id):
+    student = Student.objects.get(id=student_id)
+    address = student.address
+
+    if request.method == 'POST':
+        student_form = StudentForm(request.POST, instance=student)
+        address_form = AddressForm(request.POST, instance=address)
+        if student_form.is_valid() and address_form.is_valid():
+            address_form.save()
+            student_form.save()
+            return redirect('books:list_students_lab11_part1')
+    else:
+        student_form = StudentForm(instance=student)
+        address_form = AddressForm(instance=address)
+
+    return render(request, 'lab11_part1/editstudent.html', {'student_form': student_form, 'address_form': address_form})
+
+# حذف طالب وعنوانه
+def delete_student_lab11_part1(request, student_id):
+    student = Student.objects.get(id=student_id)
+    student.address.delete()
+    student.delete()
+    return redirect('books:list_students_lab11_part1')
+
+# Lab 11 - Part 2 (Address CRUD)
+
+def list_addresses_lab11_part2(request):
+    addresses = Address.objects.all()
+    return render(request, 'lab11_part2/listaddress.html', {'addresses': addresses})
+
+
+def add_address_lab11_part2(request):
+    if request.method == 'POST':
+        form = AddressForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('books:list_addresses_lab11_part2')
+    else:
+        form = AddressForm()
+    return render(request, 'lab11_part2/addaddress.html', {'form': form})
+
+
+def edit_address_lab11_part2(request, address_id):
+    address = Address.objects.get(id=address_id)
+    if request.method == 'POST':
+        form = AddressForm(request.POST, instance=address)
+        if form.is_valid():
+            form.save()
+            return redirect('books:list_addresses_lab11_part2')
+    else:
+        form = AddressForm(instance=address)
+    return render(request, 'lab11_part2/editaddress.html', {'form': form, 'address': address})
+
+
+def delete_address_lab11_part2(request, address_id):
+    address = Address.objects.get(id=address_id)
+    address.delete()
+    return redirect('books:list_addresses_lab11_part2')

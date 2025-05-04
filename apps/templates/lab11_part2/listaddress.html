@@ -1,0 +1,15 @@
+<h1>Addresses List</h1>
+
+<ul>
+  {% for address in addresses %}
+    <li>
+      {{ address.city }} - {{ address.street }} - {{ address.zip_code }}
+      [<a href="{% url 'books:edit_address_lab11_part2' address.id %}">Edit</a>]
+      [<a href="{% url 'books:delete_address_lab11_part2' address.id %}">Delete</a>]
+    </li>
+  {% empty %}
+    <li>No addresses found.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'books:add_address_lab11_part2' %}">Add New Address</a>

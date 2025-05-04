@@ -1,0 +1,8 @@
+<h1>{% if student_form.instance.pk %}Edit{% else %}Add{% endif %} Student</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ student_form.as_p }}
+    {{ address_form.as_p }}
+    <button type="submit">Save</button>
+</form>
